@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.dao.DictMapper">
+    <select id="findDictByCode" parameterType="string" resultType="com.itheima.pojo.BaseDict">
+        SELECT *
+        FROM base_dict b
+        WHERE b.dict_enable = '1'
+        AND b.dict_type_code = #{code}
+        ORDER BY b.dict_sort
+    </select>
+</mapper>

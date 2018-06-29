@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.itheima.dao.CustomerMapper">
+    <sql id="customer_where">
+        <where>
+            <if test="custName != null and custName != ''">
+                and c.cust_name like '%${custName}%'
+            </if>
+            <if test="custSource != null and custSource != ''">
+                and c.cust_source=#{custSource}
+            </if>
+            <if test="custIndustry != null and custIndustry != ''">
+                and c.cust_industry=#{custIndustry}
+            </if>
+            <if test="custLevel != null and custLevel != ''">
+                and c.cust_level=#{custLevel}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findCustomerByVo" parameterType="com.itheima.pojo.QueryVo" resultType="com.itheima.pojo.Customer">
+        SELECT
+        c.`cust_id`,
+        c.`cust_name`,
+        c.`cust_linkman`,
+        c.`cust_phone`,
+        c.`cust_mobile`,
+        c.`cust_zipcode`,
+        c.`cust_address`,
+        c.`cust_createtime`,
+        (SELECT b.`dict_item_name`
+        FROM `base_dict` b
+        WHERE c.`cust_source` = b.`dict_id`) cust_source,
+        (SELECT b.`dict_item_name`
+        FROM `base_dict` b
+        WHERE c.`cust_industry` = b.`dict_id`) cust_industry,
+        (SELECT b.`dict_item_name`
+        FROM `base_dict` b
+        WHERE c.`cust_level` = b.`dict_id`) cust_level
+        FROM customer c
+        <include refid="customer_where"/>
+        LIMIT #{start}, #{size}
+    </select>
+
+    <select id="findCustomerCountByVo" parameterType="com.itheima.pojo.QueryVo" resultType="int">
+        SELECT COUNT(*)
+        FROM customer c
+        <include refid="customer_where"/>
+    </select>
+</mapper>
