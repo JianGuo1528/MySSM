@@ -38,7 +38,7 @@ public class SpringTest {
     @Test
     public void test01() {
         // 使用Spring的工厂:
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext-*.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         // 通过工厂获得类:
         SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) applicationContext.getBean("sqlSessionFactory");
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -64,7 +64,7 @@ public class SpringTest {
 
     @Test
     public void test02() {
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext-*.xml");
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
         // 通过工厂获得类:
         SqlSessionFactory sqlSessionFactory = (SqlSessionFactory) applicationContext.getBean("sqlSessionFactory");
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -79,11 +79,11 @@ public class SpringTest {
                 cityEn = cityEn.substring(0, 1).toUpperCase() + cityEn.substring(1);
                 cityEn = cityEn.replaceAll("[\\d]{1,}", "");
                 worldCityAbroad.setCityEn(cityEn);
-                worldCityAbroadMapper.updateByPrimaryKeySelective(worldCityAbroad);
+//                worldCityAbroadMapper.updateByPrimaryKeySelective(worldCityAbroad);
             }
         }
 
-        sqlSession.commit();
+//        sqlSession.commit();
         sqlSession.close();
     }
 }
